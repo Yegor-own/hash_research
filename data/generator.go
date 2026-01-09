@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const letters = "abcdefghijklmnopqrstuvwxyz"
+const letters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
