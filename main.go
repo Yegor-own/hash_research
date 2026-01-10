@@ -1,31 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-	"encoding/csv"
-	"strconv"
-
-	"hash_research/rk"
 	"hash_research/hash"
-	"hash_research/data"
-
+	"hash_research/rk"
 )
 
-func writeToFile(filename, content string) error {
-	return os.WriteFile(filename, []byte(content), 0644)
-}
 
-func readFromFile(filename string) (string) {
-	s, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(s)
-}
-
-func experimentTextLength(
+func experimentTextLength( // эксперимент 2 влияние длины текста
 	patternLength int,
 	output string,
 ) {
@@ -35,13 +16,12 @@ func experimentTextLength(
 		path string
 	}{
 		{"lorem", "data/lorem.txt"},
-		{"dna",   "data/dna.txt"},
+		{"dna", "data/dna.txt"},
 		{"alice", "data/alice.txt"},
 		{"random_10k", "data/random_10000.txt"},
 		{"random_50k", "data/random_50000.txt"},
 		{"random_100k", "data/random_100000.txt"},
 		{"random_200k", "data/random_200000.txt"},
-		
 	}
 
 	hashFactories := []struct {
@@ -54,7 +34,7 @@ func experimentTextLength(
 	}
 
 	for _, f := range files {
-		text := readFromFile(f.path)
+		text := ReadFromFile(f.path)
 
 		start := len(text) / 2
 		pattern := text[start : start+patternLength]
@@ -63,7 +43,7 @@ func experimentTextLength(
 			h := hf.new()
 			m := rk.Search(text, pattern, h)
 
-			appendResult(
+			AppendResult(
 				output,
 				f.name,
 				h.Name(),
@@ -76,7 +56,7 @@ func experimentTextLength(
 		bigH := hash.NewPolyHashBig(257)
 		mBig := rk.SearchBig(text, pattern, bigH)
 
-		appendResult(
+		AppendResult(
 			output,
 			f.name,
 			bigH.Name(),
@@ -87,8 +67,7 @@ func experimentTextLength(
 	}
 }
 
-
-func experimentPatternLength(
+func experimentPatternLength( // эксперимент 1 влияние длины шаблона
 	textName string,
 	text string,
 	output string,
@@ -107,7 +86,7 @@ func experimentPatternLength(
 
 	for _, m := range patternLengths {
 		start := len(text) / 2
-		if start + m >= len(text) {
+		if start+m >= len(text) {
 			continue
 		}
 
@@ -117,7 +96,7 @@ func experimentPatternLength(
 			h := hf.new()
 			metrics := rk.Search(text, pattern, h)
 
-			appendResult(
+			AppendResult(
 				output,
 				textName,
 				h.Name(),
@@ -131,7 +110,7 @@ func experimentPatternLength(
 		bigH := hash.NewPolyHashBig(257)
 		metricsBig := rk.SearchBig(text, pattern, bigH)
 
-		appendResult(
+		AppendResult(
 			output,
 			textName,
 			bigH.Name(),
@@ -142,15 +121,13 @@ func experimentPatternLength(
 	}
 }
 
-
-
 func main() {
 
 	texts := map[string]string{
-		"lorem": readFromFile("data/lorem.txt"),
-		"alice": readFromFile("data/alice.txt"),
-		"dna":   readFromFile("data/dna.txt"),
-		"repetitive_100k": readFromFile("data/repetitive_100k.txt"),
+		"lorem":           ReadFromFile("data/lorem.txt"),
+		"alice":           ReadFromFile("data/alice.txt"),
+		"dna":             ReadFromFile("data/dna.txt"),
+		"repetitive_100k": ReadFromFile("data/repetitive_100k.txt"),
 	}
 
 	for name, text := range texts {
@@ -165,86 +142,6 @@ func main() {
 }
 
 
-func appendResult(
-	filename string,
-	textName string,
-	hashName string,
-	pattern string,
-	text string,
-	m rk.Metrics) error {
-
-	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	if err := writeCSVHeaderIfNeeded(file); err != nil {
-		return err
-	}
-
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	return writer.Write([]string{
-		textName,
-		hashName,
-		strconv.Itoa(len(pattern)),
-		strconv.Itoa(len(text)),
-		strconv.FormatInt(m.Time.Nanoseconds(), 10),
-		strconv.Itoa(m.HashMatches),
-		strconv.Itoa(m.Collisions),
-		strconv.Itoa(m.CharComparisons),
-		strconv.Itoa(m.Matches),
-	})
-}
 
 
-func writeCSVHeaderIfNeeded(file *os.File) error {
-	info, err := file.Stat()
-	if err != nil {
-		return err
-	}
 
-	if info.Size() == 0 {
-		writer := csv.NewWriter(file)
-		defer writer.Flush()
-
-		return writer.Write([]string{
-			"text_name",
-			"hash_name",
-			"pattern_length",
-			"text_length",
-			"time_ns",
-			"hash_matches",
-			"collisions",
-			"char_comparisons",
-			"matches",
-		})
-	}
-	return nil
-}
-
-func randomTextGen() { // вызвать для генерации файлов со случайными последовательностями
-	sizes := []int{
-		10_000,
-		50_000,
-		100_000,
-		200_000,
-	}
-
-	for _, size := range sizes {
-		text := data.RandomText(size)
-		filename := fmt.Sprintf("data/random_%d.txt", size)
-
-		err := writeToFile(filename, text)
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("generated:", filename)
-	}
-
-	repetitive := data.RepetitiveText(100_000, 'A')
-	writeToFile("data/repetitive_100k.txt", repetitive)
-}
