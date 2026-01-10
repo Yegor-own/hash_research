@@ -6,10 +6,11 @@ from pathlib import Path
 df = pd.read_csv("output/pattern_length.csv")
 
 # HASH_ORDER = ["sum", "poly_mod", "djb2", "poly_nomod"]
-HASH_ORDER = ["sum", "poly_mod", "djb2"]
+# HASH_ORDER = ["sum", "poly_mod", "djb2"]
+HASH_ORDER = ["sum", "poly_mod", "poly_nomod"]
 
 Path("plots").mkdir(exist_ok=True)
-Path("plots/pattern_without_pily_nomod").mkdir(exist_ok=True)
+Path("plots/pattern_without_djb2").mkdir(exist_ok=True)
 
 def plot_metric(text_name, y_column, ylabel, filename):
     subset = df[df["text_name"] == text_name]
@@ -43,7 +44,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="time_ns",
         ylabel="Time (ns)",
-        filename=f"plots/pattern_without_pily_nomod/time_{text}.png"
+        filename=f"plots/pattern_without_djb2/time_{text}.png"
     )
 
 for text in ["lorem", "alice", "dna", "repetitive_100k"]:
@@ -51,7 +52,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="collisions",
         ylabel="Collisions",
-        filename=f"plots/pattern_without_pily_nomod/collisions_{text}.png"
+        filename=f"plots/pattern_without_djb2/collisions_{text}.png"
     )
 
 for text in ["lorem", "alice", "dna", "repetitive_100k"]:
@@ -59,7 +60,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="char_comparisons",
         ylabel="Сhar Сmparisons",
-        filename=f"plots/pattern_without_pily_nomod/char_comparisons_{text}.png"
+        filename=f"plots/pattern_without_djb2/char_comparisons_{text}.png"
     )
 
 
@@ -68,7 +69,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="matches",
         ylabel="Matches",
-        filename=f"plots/pattern_without_pily_nomod/matches_{text}.png"
+        filename=f"plots/pattern_without_djb2/matches_{text}.png"
     )
 
 for text in ["lorem", "alice", "dna", "repetitive_100k"]:
@@ -76,7 +77,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="matches",
         ylabel="Matches",
-        filename=f"plots/pattern_without_pily_nomod/matches_{text}.png"
+        filename=f"plots/pattern_without_djb2/matches_{text}.png"
     )
 
 for text in ["lorem", "alice", "dna", "repetitive_100k"]:
@@ -84,7 +85,7 @@ for text in ["lorem", "alice", "dna", "repetitive_100k"]:
         text_name=text,
         y_column="hash_matches",
         ylabel="Hash Matches",
-        filename=f"plots/pattern_without_pily_nomod/hash_matches_{text}.png"
+        filename=f"plots/pattern_without_djb2/hash_matches_{text}.png"
     )
 
 print("ok")
