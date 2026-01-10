@@ -121,19 +121,19 @@ H_new = (H_old - left * p^(m-1)) * p + right
 ### 6.1 Время выполнения
 
 [![эксперимент 1, текст: lorem](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_lorem.png "Эксперимент 1, текст: lorem")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_lorem.png)
-Эксперимент 1, текст: lorem
+*Эксперимент 1, текст: lorem*
 
 [![эксперимент 1, текст: днк](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_dna.png "Эксперимент 1, текст: днк")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_dna.png)
-Эксперимент 1, текст: днк
+*Эксперимент 1, текст: днк*
 
 [![эксперимент 1 без poly_nomod, текст: днк](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern_without_pily_nomod/time_dna.png "Эксперимент 1 без poly_nomod, текст: днк")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern_without_pily_nomod/time_dna.png)
-Эксперимент 1 без poly_nomod, текст: днк
+*Эксперимент 1 без poly_nomod, текст: днк*
 
 [![эксперимент 1, текст: Алиса](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_alice.png "Эксперимент 1, текст: Алиса")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/time_alice.png)
-Эксперимент 1, текст: Алиса
+*Эксперимент 1, текст: Алиса*
 
 [![эксперимент 2](https://github.com/Yegor-own/hash_research/blob/master/plots/text/time_vs_text_length.png "Эксперимент 2")](https://github.com/Yegor-own/hash_research/blob/master/plots/text/time_vs_text_length.png)
-Эксперимент 2
+*Эксперимент 2*
 
 ``poly_nomod`` показал наихудшее время выполнения (рост времени обусловлен использованием BigInt)
 
@@ -142,15 +142,19 @@ H_new = (H_old - left * p^(m-1)) * p + right
 ### 6.2 Коллизии
 
 [![эксперимент 1, текст: lorem](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_lorem.png "Эксперимент 1, текст: lorem")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_lorem.png)
+*Эксперимент 1, текст: lorem*
 
 [![эксперимент 1, текст: днк](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_dna.png "Эксперимент 1, текст: днк")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_dna.png)
+*Эксперимент 1, текст: днк*
 
 [![эксперимент 1 без poly_nomod, текст: днк](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern_without_pily_nomod/collisions_dna.png "Эксперимент 1 без poly_nomod, текст: днк")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern_without_pily_nomod/collisions_dna.png)
-Эксперимент 1 без poly_nomod, текст: днк
+*Эксперимент 1 без poly_nomod, текст: днк*
 
 [![эксперимент 1, текст: Алиса](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_alice.png "Эксперимент 1, текст: Алиса")](https://github.com/Yegor-own/hash_research/blob/master/plots/pattern/collisions_alice.png)
+*Эксперимент 1, текст: Алиса*
 
 [![эксперимент 2](https://github.com/Yegor-own/hash_research/blob/master/plots/text/collisions_vs_text_length.png "Эксперимент 2")](https://github.com/Yegor-own/hash_research/blob/master/plots/text/collisions_vs_text_length.png)
+*Эксперимент 2*
 
 **Остальные графики можно посмотреть в папке ``plots``**
 
