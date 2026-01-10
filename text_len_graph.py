@@ -52,4 +52,22 @@ plot_metric(
     filename="plots/text/collisions_vs_text_length.png"
 )
 
+plot_metric(
+    y_column="char_comparisons",
+    ylabel="char_comparisons",
+    filename="plots/text/char_comparisons_vs_text_length.png"
+)
+
+plot_metric(
+    y_column="hash_matches",
+    ylabel="hash_matches",
+    filename="plots/text/hash_matches_vs_text_length.png"
+)
+
+plot_metric(
+    y_column="matches",
+    ylabel="matches",
+    filename="plots/text/matches_vs_text_length.png"
+)
+
 print("ok")
